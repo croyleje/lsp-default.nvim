@@ -1,18 +1,18 @@
 # Lazy loading with lazy.nvim
 
-Lots of you really like this lazy loading business. Let me show you how to defer everything in lsp-zero using [lazy.nvim](https://github.com/folke/lazy.nvim).
+Lots of you really like this lazy loading business. Let me show you how to defer everything in lsp-default using [lazy.nvim](https://github.com/folke/lazy.nvim).
 
 ```lua
 {
   {
-    'VonHeikemen/lsp-zero.nvim',
+    'croyleje/lsp-default.nvim',
     branch = 'v2.x',
     lazy = true,
     config = function()
-      -- This is where you modify the settings for lsp-zero
+      -- This is where you modify the settings for lsp-default
       -- Note: autocompletion settings will not take effect
 
-      require('lsp-zero.settings').preset({})
+      require('lsp-default.settings').preset({})
     end
   },
 
@@ -25,14 +25,14 @@ Lots of you really like this lazy loading business. Let me show you how to defer
     },
     config = function()
       -- Here is where you configure the autocompletion settings.
-      -- The arguments for .extend() have the same shape as `manage_nvim_cmp`: 
-      -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#manage_nvim_cmp
+      -- The arguments for .extend() have the same shape as `manage_nvim_cmp`:
+      -- https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#manage_nvim_cmp
 
-      require('lsp-zero.cmp').extend()
+      require('lsp-default.cmp').extend()
 
       -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
-      local cmp_action = require('lsp-zero.cmp').action() 
+      local cmp_action = require('lsp-default.cmp').action()
 
       cmp.setup({
         mapping = {
@@ -57,10 +57,10 @@ Lots of you really like this lazy loading business. Let me show you how to defer
     config = function()
       -- This is where all the LSP shenanigans will live
 
-      local lsp = require('lsp-zero')
+      local lsp = require('lsp-default')
 
       lsp.on_attach(function(client, bufnr)
-        -- see :help lsp-zero-keybindings
+        -- see :help lsp-default-keybindings
         -- to learn the available actions
         lsp.default_keymaps({buffer = bufnr})
       end)
@@ -73,4 +73,3 @@ Lots of you really like this lazy loading business. Let me show you how to defer
   }
 }
 ```
-

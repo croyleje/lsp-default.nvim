@@ -4,7 +4,7 @@
 
 Language servers are configured and initialized using [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/).
 
-Ever wondered what lsp-zero does under the hood? Let me tell you.
+Ever wondered what lsp-default does under the hood? Let me tell you.
 
 First it adds data to an option called `capabilities` in lspconfig's defaults. This new data comes from [cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp). It tells the language server what features [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) adds to the editor.
 
@@ -42,11 +42,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     vim.keymap.set('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
     vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
-    vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts) 
+    vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
   end
 })
 
--- call mason.nvim if installed 
+-- call mason.nvim if installed
 -- require('mason').setup()
 -- require('mason-lspconfig').setup()
 
@@ -56,24 +56,24 @@ lspconfig.eslint.setup({})
 
 ## Commands
 
-* `LspZeroFormat {server} timeout={timeout}`: Formats the current buffer or range. Under the hood lsp-zero is using the function `vim.lsp.buf.format()`. If the "bang" is provided formatting will be asynchronous (ex: `LspZeroFormat!`). If you provide the name of a language server as a first argument it will try to format only using that server. Otherwise, it will use every active language server with formatting capabilities. With the `timeout` parameter you can configure the time in milliseconds to wait for the response of the formatting requests.
+* `LspDefaultFormat {server} timeout={timeout}`: Formats the current buffer or range. Under the hood lsp-default is using the function `vim.lsp.buf.format()`. If the "bang" is provided formatting will be asynchronous (ex: `LspDefaultFormat!`). If you provide the name of a language server as a first argument it will try to format only using that server. Otherwise, it will use every active language server with formatting capabilities. With the `timeout` parameter you can configure the time in milliseconds to wait for the response of the formatting requests.
 
-* `LspZeroWorkspaceRemove`: Remove the folder at path from the workspace folders. See [:help vim.lsp.buf.remove_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.remove_workspace_folder()).
+* `LspDefaultWorkspaceRemove`: Remove the folder at path from the workspace folders. See [:help vim.lsp.buf.remove_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.remove_workspace_folder()).
 
-* `LspZeroWorkspaceAdd`: Add the folder at path to the workspace folders. See [:help vim.lsp.buf.add_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.add_workspace_folder()).
+* `LspDefaultWorkspaceAdd`: Add the folder at path to the workspace folders. See [:help vim.lsp.buf.add_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.add_workspace_folder()).
 
-* `LspZeroWorkspaceList`: List workspace folders. See [:help vim.lsp.buf.list_workspace_folders()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.list_workspace_folders()).
+* `LspDefaultWorkspaceList`: List workspace folders. See [:help vim.lsp.buf.list_workspace_folders()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.list_workspace_folders()).
 
-* `LspZeroSetupServers [{servers}]`: It takes a space separated list of servers and configures them.
+* `LspDefaultSetupServers [{servers}]`: It takes a space separated list of servers and configures them.
 
 ## Creating new keybindings
 
-Just like the default keybindings the idea here is to create them only when a language server is active in a buffer. For this use the [.on_attach()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#on_attachcallback) function, and then use neovim's built-in functions create the keybindings.
+Just like the default keybindings the idea here is to create them only when a language server is active in a buffer. For this use the [.on_attach()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#on_attachcallback) function, and then use neovim's built-in functions create the keybindings.
 
 Here is an example that replaces the default keybinding `gr` with a [telescope](https://github.com/nvim-telescope/telescope.nvim) command.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -86,9 +86,9 @@ lsp.setup()
 
 ## Disable keybindings
 
-To disable all keybindings just delete the call to [.default_keymaps()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts).
+To disable all keybindings just delete the call to [.default_keymaps()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts).
 
-If you want lsp-zero to skip only a few keys you can add the `omit` property to the [.default_keymaps()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts) call. Say you want to keep the default behavior of `K` and `gs`, you would do this.
+If you want lsp-default to skip only a few keys you can add the `omit` property to the [.default_keymaps()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#default_keymapsopts) call. Say you want to keep the default behavior of `K` and `gs`, you would do this.
 
 ```lua
 lsp.default_keymaps({
@@ -109,10 +109,10 @@ If you have [mason.nvim](https://github.com/williamboman/mason.nvim) and [mason-
 
 ### Automatic installs
 
-If you have [mason.nvim](https://github.com/williamboman/mason.nvim) and [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim) installed you can use the function [.ensure_installed()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#ensure_installedlist) to list the language servers you want to install with `mason.nvim`.
+If you have [mason.nvim](https://github.com/williamboman/mason.nvim) and [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim) installed you can use the function [.ensure_installed()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#ensure_installedlist) to list the language servers you want to install with `mason.nvim`.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -132,10 +132,10 @@ Keep in mind the names of the servers must be in [this list](https://github.com/
 
 ## Configure language servers
 
-To pass arguments to a language server you can use the lspconfig directly. Just make sure you call lspconfig after the require of lsp-zero.
+To pass arguments to a language server you can use the lspconfig directly. Just make sure you call lspconfig after the require of lsp-default.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -151,10 +151,10 @@ require('lspconfig').eslint.setup({
 lsp.setup()
 ```
 
-For backwards compatibility with the `v1.x` branch the [.configure()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#configurename-opts) function is still available. So this is still valid.
+For backwards compatibility with the `v1.x` branch the [.configure()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#configurename-opts) function is still available. So this is still valid.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -176,10 +176,10 @@ The name of the server can be anything [lspconfig supports](https://github.com/n
 
 Neovim v0.9 allows an LSP server to define highlight groups, this is known as semantic tokens. This new feature is enabled by default. To disable it we need to modify the `server_capabilities` property of the language server, more specifically we need to "delete" the `semanticTokensProvider` property.
 
-We can disable this new feature in every server using the function [.set_server_config()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#set_server_configopts). 
+We can disable this new feature in every server using the function [.set_server_config()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#set_server_configopts).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -194,7 +194,7 @@ lsp.set_server_config({
 lsp.setup()
 ```
 
-Note that defining an `on_init` hook in a language server will override the one in [.set_server_config()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#set_server_configopts). 
+Note that defining an `on_init` hook in a language server will override the one in [.set_server_config()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#set_server_configopts).
 
 If you just want to disable it for a particular server, use lspconfig to assign the `on_init` hook to that server.
 
@@ -221,10 +221,10 @@ require('lspconfig').tsserver.setup({
 
 ## Disable a language server
 
-Use the function [.skip_server_setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#skip_server_setupname) to tell lsp-zero to ignore a particular set of language servers.
+Use the function [.skip_server_setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#skip_server_setupname) to tell lsp-default to ignore a particular set of language servers.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -248,7 +248,7 @@ You'll need to provide the command to start the LSP server, a list of filetypes 
 Note: before doing anything, make sure the server you want to add is **not** supported by `lspconfig`. Read the [list of supported LSP servers](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#configurations).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -272,12 +272,12 @@ end
 require('lspconfig').my_new_lsp.setup({})
 ```
 
-### Use the function [.new_server()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#new_serveropts)
+### Use the function [.new_server()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#new_serveropts)
 
 If you don't need a "robust" solution you can use the function `.new_server()`. This function is just a thin wrapper that calls [vim.lsp.start()](https://neovim.io/doc/user/lsp.html#vim.lsp.start()) in a `FileType` autocommand.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -290,7 +290,7 @@ lsp.new_server({
   cmd = {'my-new-lsp'},
   filetypes = {'my-filetype'},
   root_dir = function()
-    return lsp.dir.find_first({'some-config-file'}) 
+    return lsp.dir.find_first({'some-config-file'})
   end
 })
 ```
@@ -303,12 +303,12 @@ Note: When you enable format on save your LSP server is doing the formatting. Th
 
 ### Explicit setup
 
-If you want to control exactly what language server is used to format a file call the function [.format_on_save()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#format_on_saveopts), this will allow you to associate a language server with a list of filetypes.
+If you want to control exactly what language server is used to format a file call the function [.format_on_save()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#format_on_saveopts), this will allow you to associate a language server with a list of filetypes.
 
 Note: asynchronous formatting on save is experimental right now (2023-05-11).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -333,10 +333,10 @@ lsp.setup()
 
 ### Always use the active servers
 
-If you only ever have **one** language server attached in each file and you are happy with all of them, you can call the function [.buffer_autoformat()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#buffer_autoformatclient-bufnr) in the [.on_attach](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#on_attachcallback) hook.
+If you only ever have **one** language server attached in each file and you are happy with all of them, you can call the function [.buffer_autoformat()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#buffer_autoformatclient-bufnr) in the [.on_attach](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#on_attachcallback) hook.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -348,12 +348,12 @@ lsp.setup()
 
 If you have multiple servers active in one file it'll try to format using all of them, and I can't guarantee the order.
 
-Is worth mention [.buffer_autoformat()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#buffer_autoformatclient-bufnr) is a blocking (synchronous) function.
+Is worth mention [.buffer_autoformat()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#buffer_autoformatclient-bufnr) is a blocking (synchronous) function.
 
-If you want something that behaves like [.buffer_autoformat()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#buffer_autoformatclient-bufnr) but is asynchronous you'll have to use [lsp-format.nvim](https://github.com/lukas-reineke/lsp-format.nvim).
+If you want something that behaves like [.buffer_autoformat()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#buffer_autoformatclient-bufnr) but is asynchronous you'll have to use [lsp-format.nvim](https://github.com/lukas-reineke/lsp-format.nvim).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -375,7 +375,7 @@ lsp.setup()
 You'll want to bind the function [vim.lsp.buf.format()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.format()) to a keymap. The next example will create a keymap `gq` to format the current buffer using **all** active servers with formatting capabilities.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -392,7 +392,7 @@ lsp.setup()
 If you want to allow only a list of servers, use the `filter` option. You can create a function that compares the current server with a list of allowed servers.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 local function allow_format(servers)
   return function(client) return vim.tbl_contains(servers, client.name) end
@@ -416,12 +416,12 @@ lsp.setup()
 
 ### Ensure only one LSP server per filetype
 
-If you want to control exactly what language server can format, use the function [.format_mapping()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#format_mappingkey-opts). It will allow you to associate a list of filetypes to a particular language server.
+If you want to control exactly what language server can format, use the function [.format_mapping()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#format_mappingkey-opts). It will allow you to associate a list of filetypes to a particular language server.
 
 Here is an example using `gq` as the keymap.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -448,12 +448,12 @@ lsp.setup()
 
 ### Automatic setup failed
 
-To figure out what happened use the function `require('lsp-zero.check').run()` in command mode, pass a string with the name of the language server.
+To figure out what happened use the function `require('lsp-default.check').run()` in command mode, pass a string with the name of the language server.
 
 Here is an example with `lua_ls`.
 
 ```lua
-:lua require('lsp-zero.check').run('lua_ls')
+:lua require('lsp-default.check').run('lua_ls')
 ```
 
 > The name of the language server must match with one in this list: [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#configurations).
@@ -485,7 +485,7 @@ You can inspect your PATH using this command.
 :lua vim.tbl_map(print, vim.split(vim.env.PATH, ':'))
 ```
 
-> Note: if you use windows replace ':' with ';' in the second argument of `vim.split`. 
+> Note: if you use windows replace ':' with ';' in the second argument of `vim.split`.
 
 The executable for your language server should be in one of those folders. Make sure it is present and the file itself is executable.
 
@@ -515,34 +515,34 @@ lsp.configure('tsserver', {
 })
 ```
 
-Notice here that we have a property called `settings`, and you want to know if lsp-zero did send your config to the active language server. Use the function `require('lsp-zero.check').inspect_settings()` in command mode, pass a string with the name of the language server.
+Notice here that we have a property called `settings`, and you want to know if lsp-default did send your config to the active language server. Use the function `require('lsp-default.check').inspect_settings()` in command mode, pass a string with the name of the language server.
 
 ```lua
-:lua require('lsp-zero.check').inspect_settings('tsserver')
+:lua require('lsp-default.check').inspect_settings('tsserver')
 ```
 
 If everything went well you should get every default config lspconfig added plus your own.
 
-If this didn't showed your settings, make sure you don't call `lspconfig` in another part of your neovim config. lspconfig can override everything lsp-zero does.
+If this didn't showed your settings, make sure you don't call `lspconfig` in another part of your neovim config. lspconfig can override everything lsp-default does.
 
 ### Inspect the entire server config
 
-Use the function `require('lsp-zero.check').inspect_server_config()` in command mode, pass a string with the name of the language server.
+Use the function `require('lsp-default.check').inspect_server_config()` in command mode, pass a string with the name of the language server.
 
 Here is an example.
 
 ```lua
-:lua require('lsp-zero.check').inspect_server_config('tsserver')
+:lua require('lsp-default.check').inspect_server_config('tsserver')
 ```
 
 > The name of the language server must match with one in this list: [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#configurations).
 
 ## Diagnostics
 
-That's the name neovim uses for error messages, warnings, hints, etc. lsp-zero only does two things to diagnostics: add borders to floating windows and enable "severity sort". All of that can be disable from the [.preset()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#presetopts) call.
+That's the name neovim uses for error messages, warnings, hints, etc. lsp-default only does two things to diagnostics: add borders to floating windows and enable "severity sort". All of that can be disable from the [.preset()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#presetopts) call.
 
 ```lua
-local lsp = require('lsp-zero').preset({
+local lsp = require('lsp-default').preset({
   float_border = 'none',
   configure_diagnostics = false,
 })
@@ -558,10 +558,10 @@ vim.diagnostic.config({
 
 ## Use icons in the sign column
 
-If you don't know, the "sign column" is a space in the gutter next to the line numbers. When there is a warning or an error in a line Neovim will show you a letter like `W` or `E`. Well, you can turn that into icons if you wanted to, using the function [.set_sign_icons](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#set_sign_iconsopts). 
+If you don't know, the "sign column" is a space in the gutter next to the line numbers. When there is a warning or an error in a line Neovim will show you a letter like `W` or `E`. Well, you can turn that into icons if you wanted to, using the function [.set_sign_icons](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#set_sign_iconsopts).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -581,7 +581,7 @@ lsp.setup()
 
 Install and updates of language servers is done with [mason.nvim](https://github.com/williamboman/mason.nvim).
 
-> With mason.nvim you can also install formatters and debuggers, but lsp-zero will only configure LSP servers.
+> With mason.nvim you can also install formatters and debuggers, but lsp-default will only configure LSP servers.
 
 To install a server manually use the command `LspInstall` with the name of the server you want to install. If you don't provide a name `mason-lspconfig.nvim` will try to suggest a language server based on the filetype of the current buffer.
 
@@ -591,7 +591,7 @@ To uninstall a package use the command `Mason`. Navigate to the item you want to
 
 To know more about the available bindings inside the floating window of Mason press `g?`.
 
-If you need to customize mason.nvim make sure you do it before calling the lsp-zero module.
+If you need to customize mason.nvim make sure you do it before calling the lsp-default module.
 
 ```lua
 require('mason').setup({
@@ -600,7 +600,7 @@ require('mason').setup({
   }
 })
 
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -611,16 +611,16 @@ lsp.setup()
 
 ### Opt-out of mason.nvim
 
-Really all you need is to do is uninstall `mason.nvim` and `mason-lspconfig`. Or call [.preset()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#lua-api#presetopts) and use modify these settings:
+Really all you need is to do is uninstall `mason.nvim` and `mason-lspconfig`. Or call [.preset()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#lua-api#presetopts) and use modify these settings:
 
 ```lua
 setup_servers_on_start = false
 call_servers = 'global'
 ```
 
-Then you need to specify which language server you want to setup, for this use [.setup_servers()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#lua-api#setup_serverslist) or [.configure()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#lua-api#configurename-opts).
+Then you need to specify which language server you want to setup, for this use [.setup_servers()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#lua-api#setup_serverslist) or [.configure()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#lua-api#configurename-opts).
 
-## You might not need lsp-zero
+## You might not need lsp-default
 
 Really. Out of all the features this plugin offers there is a good chance the only thing you want is the automatic setup of LSP servers. Let me tell you how to configure that.
 
@@ -676,4 +676,3 @@ for _, server_name in ipairs(get_servers()) do
   })
 end
 ```
-

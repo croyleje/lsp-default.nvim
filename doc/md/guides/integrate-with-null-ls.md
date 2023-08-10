@@ -2,10 +2,10 @@
 
 ## Standalone null-ls instance
 
-null-ls isn't a real language server, if you want "integrate it" with lsp-zero all you need to do is call their setup function after lsp-zero's config.
+null-ls isn't a real language server, if you want "integrate it" with lsp-default all you need to do is call their setup function after lsp-default's config.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -29,12 +29,12 @@ null_ls.setup({
 
 ### Format buffer using only null-ls
 
-You can assign a keyboard shortcut using the [.format_mapping()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#format_mappingkey-opts) function. This will allow you to specify a list of filetypes where you want to format using null-ls. 
+You can assign a keyboard shortcut using the [.format_mapping()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#format_mappingkey-opts) function. This will allow you to specify a list of filetypes where you want to format using null-ls.
 
 Here is an example showing a setup focused on lua and javascript. We assign the keymap `gq` to format.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -67,10 +67,10 @@ null_ls.setup({
 
 ### Format on save
 
-This can be almost the same as the previous example, except here we replace the function [.format_mapping()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#format_mappingkey-opts) with [.format_on_save()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#format_on_save-opts).
+This can be almost the same as the previous example, except here we replace the function [.format_mapping()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#format_mappingkey-opts) with [.format_on_save()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#format_on_save-opts).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -110,7 +110,7 @@ null_ls.setup({
 Ensure the tools you have listed in the `sources` option are installed automatically.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -144,7 +144,7 @@ require('mason-null-ls').setup({
 Make null-ls aware of the tools you installed using mason.nvim, and configure them automatically.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -176,4 +176,3 @@ require('mason-null-ls').setup({
   }
 })
 ```
-

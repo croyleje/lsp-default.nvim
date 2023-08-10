@@ -1,6 +1,6 @@
 # Tutorial
 
-Here we will learn enough about Neovim to configure lsp-zero `v2.0`. We will create a configuration file called `init.lua`, install a plugin manager, a colorscheme and finally setup lsp-zero.
+Here we will learn enough about Neovim to configure lsp-default `v2.0`. We will create a configuration file called `init.lua`, install a plugin manager, a colorscheme and finally setup lsp-default.
 
 ## Requirements
 
@@ -34,9 +34,9 @@ vim.cmd.colorscheme('morning')
 
 Open Neovim again and you should notice the light theme. If you get an error it means your Neovim version does not meet the requirements. Visit Neovim's github repository, in the [release section](https://github.com/neovim/neovim/releases) you'll find prebuilt executables for the latest versions.
 
-If you can't upgrade Neovim you can still install `v1.0` of lsp-zero, I have another tutorial for that:
+If you can't upgrade Neovim you can still install `v1.0` of lsp-default, I have another tutorial for that:
 
-* [Getting started with neovim's native LSP client](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v1.x/doc/md/tutorial.md)
+* [Getting started with neovim's native LSP client](https://github.com/croyleje/lsp-default.nvim/blob/v1.x/doc/md/tutorial.md)
 
 Assuming everything went well, you can now change the theme to something else.
 
@@ -120,15 +120,15 @@ vim.cmd.colorscheme('tokyonight')
 
 When Neovim starts it should show a message telling us is cloning the plugin manager. After it's done another window will show up, it'll tell us the progress of the plugin's download. After the plugins are installed they will be loaded.
 
-## Setup lsp-zero
+## Setup lsp-default
 
-Now we need to add lsp-zero and all its dependencies in lazy's list of plugins.
+Now we need to add lsp-default and all its dependencies in lazy's list of plugins.
 
 ```lua
 require('lazy').setup({
   {'folke/tokyonight.nvim'},
   {
-    'VonHeikemen/lsp-zero.nvim',
+    'croyleje/lsp-default.nvim',
     branch = 'v2.x',
     dependencies = {
       -- LSP Support
@@ -148,10 +148,10 @@ require('lazy').setup({
 Then we add the configuration at the end of the file.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
+  -- see :help lsp-default-keybindings
   -- to learn the available actions
   lsp.default_keymaps({buffer = bufnr})
 end)
@@ -163,7 +163,7 @@ Save the file, restart Neovim and wait for everything to be downloaded.
 
 ### Install a language server
 
-Let's try to use the language server for lua. 
+Let's try to use the language server for lua.
 
 Open your `init.lua` and execute the command `:LspInstall`. Now `mason.nvim` will suggest a language server. Neovim should show a message like this.
 
@@ -213,13 +213,13 @@ Note that Neovim's runtime folder could be in a different location, it really de
 
 You should only use this method if your Neovim config is the only lua project you will ever manage with `lua_ls`.
 
-lsp-zero has a function that returns a basic config for `lua_ls`, this is how you use it.
+lsp-default has a function that returns a basic config for `lua_ls`, this is how you use it.
 
 ```lua
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 ```
 
-Add that line before the `.setup()` function of lsp-zero.
+Add that line before the `.setup()` function of lsp-default.
 
 If you need to add your own config, use the first argument to `.nvim_lua_ls()`.
 
@@ -267,7 +267,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   {'folke/tokyonight.nvim'},
   {
-    'VonHeikemen/lsp-zero.nvim',
+    'croyleje/lsp-default.nvim',
     branch = 'v2.x',
     dependencies = {
       -- LSP Support
@@ -288,10 +288,10 @@ vim.opt.termguicolors = true
 vim.cmd.colorscheme('tokyonight')
 
 -- LSP
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
+  -- see :help lsp-default-keybindings
   -- to learn the available actions
   lsp.default_keymaps({buffer = bufnr})
 end)
@@ -300,4 +300,3 @@ require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
 lsp.setup()
 ```
-

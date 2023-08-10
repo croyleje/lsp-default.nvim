@@ -6,7 +6,7 @@ Here we will focus on getting a working configuration using [nvim-jdtls](https:/
 
 * A working environment with Java 17 or greater
 * Python 3.9 or greater
-* A working configuration for Neovim (If you don't have one, follow this [step by step tutorial](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/tutorial.md))
+* A working configuration for Neovim (If you don't have one, follow this [step by step tutorial](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/tutorial.md))
 
 The code on this guide assumes you will be using [mason.nvim](https://github.com/williamboman/mason.nvim) to install the following packages:
 
@@ -18,7 +18,7 @@ Using `mason.nvim` to install these packages is optional, you can use the method
 
 Here is the list of Neovim plugins you'll need:
 
-* [lsp-zero](https://github.com/VonHeikemen/lsp-zero.nvim)
+* [lsp-default](https://github.com/croyleje/lsp-default.nvim)
 * [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls)
 * [mason.nvim](https://github.com/williamboman/mason.nvim) (optional)
 * [nvim-dap](https://github.com/mfussenegger/nvim-dap) (optional)
@@ -35,15 +35,15 @@ You can still follow this guide if you are using another operating system.
 
 ## The first step
 
-We need to tell lsp-zero to ignore the LSP server `jdtls`. We want the plugin `nvim-jdtls` to have full control of the configuration for the server.
+We need to tell lsp-default to ignore the LSP server `jdtls`. We want the plugin `nvim-jdtls` to have full control of the configuration for the server.
 
-We will use the function [.skip_server_setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#skip_server_setuplist) to make sure lsp-zero doesn't initialize jdtls.
+We will use the function [.skip_server_setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#skip_server_setuplist) to make sure lsp-default doesn't initialize jdtls.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
+  -- see :help lsp-default-keybindings
   -- to learn the available actions
   lsp.default_keymaps({buffer = bufnr})
 end)
@@ -217,12 +217,12 @@ local function get_jdtls_paths()
   end
 
   ---
-  -- Useful if you're starting jdtls with a Java version that's 
+  -- Useful if you're starting jdtls with a Java version that's
   -- different from the one the project uses.
   ---
   path.runtimes = {
     -- Note: the field `name` must be a valid `ExecutionEnvironment`,
-    -- you can find the list here: 
+    -- you can find the list here:
     -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
     --
     -- This example assume you are using sdkman: https://sdkman.io
@@ -274,7 +274,7 @@ local function jdtls_on_attach(client, bufnr)
 
   -- The following mappings are based on the suggested usage of nvim-jdtls
   -- https://github.com/mfussenegger/nvim-jdtls#usage
-  
+
   local opts = {buffer = bufnr}
   vim.keymap.set('n', '<A-o>', "<cmd>lua require('jdtls').organize_imports()<cr>", opts)
   vim.keymap.set('n', 'crv', "<cmd>lua require('jdtls').extract_variable()<cr>", opts)
@@ -319,7 +319,7 @@ local function jdtls_setup(event)
     'java.base/java.util=ALL-UNNAMED',
     '--add-opens',
     'java.base/java.lang=ALL-UNNAMED',
-    
+
     -- 💀
     '-jar',
     path.launcher_jar,
@@ -446,4 +446,3 @@ Setup a debugger, probably. You'll want to install the plugins [nvim-dap](https:
 I didn't test the debugger so I can't tell you how it works, but I believe it should work.
 
 To learn about nvim-dap and nvim-dap-ui watch this video [Debugging In Neovim (ft TJ DeVries and BashBunni)](https://www.youtube.com/watch?v=0moS8UHupGc). Sadly is not about java, but it should teach you the basics of nvim-dap and how to use it.
-

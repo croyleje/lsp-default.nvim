@@ -2,10 +2,10 @@
 
 ## Setup with nvim-navic
 
-Here what you need to do is call [nvim-navic](https://github.com/SmiteshP/nvim-navic)'s `.attach` function inside lsp-zero's [.on_attach()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#on_attachcallback). 
+Here what you need to do is call [nvim-navic](https://github.com/SmiteshP/nvim-navic)'s `.attach` function inside lsp-default's [.on_attach()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#on_attachcallback).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -36,7 +36,7 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 require('ufo').setup()
 
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -66,7 +66,7 @@ Here an example using the lua language server.
 local ih = require('inlay-hints')
 ih.setup()
 
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -90,12 +90,12 @@ lsp.setup()
 
 ## Setup with rust-tools
 
-Using [rust-tools](https://github.com/simrat39/rust-tools.nvim) to configure [rust-analyzer](https://github.com/rust-analyzer/rust-analyzer).  
+Using [rust-tools](https://github.com/simrat39/rust-tools.nvim) to configure [rust-analyzer](https://github.com/rust-analyzer/rust-analyzer).
 
-Here you need to disable the automatic configuration for `rust-analyzer` and then setup `rust-tools` after lsp-zero.
+Here you need to disable the automatic configuration for `rust-analyzer` and then setup `rust-tools` after lsp-default.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -120,10 +120,10 @@ rust_tools.setup({
 
 Using [typescript.nvim](https://github.com/jose-elias-alvarez/typescript.nvim) to configure [tsserver](https://github.com/typescript-language-server/typescript-language-server).
 
-Here you need to disable the automatic configuration for `tsserver` and then setup `typescript.nvim` after lsp-zero.
+Here you need to disable the automatic configuration for `tsserver` and then setup `typescript.nvim` after lsp-default.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -150,7 +150,7 @@ require('typescript').setup({
 The language server for dartls can't be installed with mason.nvim, because is already bundled in the dart sdk. [flutter-tools](https://github.com/akinsho/flutter-tools.nvim) doesn't depend on lspconfig (according to the documentation), so the only thing that make sense to do is add the "capabilities" options to `flutter-tools`.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -171,10 +171,10 @@ require('flutter-tools').setup({
 
 The following is based on the [example configuration](https://github.com/scalameta/nvim-metals/discussions/39) found in [nvim-metals](https://github.com/scalameta/nvim-metals) discussion section.
 
-If I understand correctly, `nvim-metals` is the one that needs to configure the [metals lsp](https://scalameta.org/metals/). So if you installed the LSP server with mason.nvim you need to tell lsp-zero to ignore it. Then add the "capabilities" option to the `metals` config.
+If I understand correctly, `nvim-metals` is the one that needs to configure the [metals lsp](https://scalameta.org/metals/). So if you installed the LSP server with mason.nvim you need to tell lsp-default to ignore it. Then add the "capabilities" option to the `metals` config.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -207,12 +207,12 @@ vim.api.nvim_create_autocmd('FileType', {
 
 ## Setup with haskell-tools
 
-Here you need to disable the automatic configuration for `hls` and then setup [haskell-tools](https://github.com/mrcjkb/haskell-tools.nvim) after lsp-zero.
+Here you need to disable the automatic configuration for `hls` and then setup [haskell-tools](https://github.com/mrcjkb/haskell-tools.nvim) after lsp-default.
 
-The only option that makes sense to share from lsp-zero is the "capabilities" options.
+The only option that makes sense to share from lsp-default is the "capabilities" options.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -226,7 +226,7 @@ lsp.setup()
 -- Setup haskell LSP
 ---
 local haskell_tools = require('haskell-tools')
-local hls_lsp = require('lsp-zero').build_options('hls', {})
+local hls_lsp = require('lsp-default').build_options('hls', {})
 
 local hls_config = {
   hls = {
@@ -270,10 +270,10 @@ vim.api.nvim_create_autocmd('FileType', {
 
 ### Setup with clangd_extensions.nvim
 
-[clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) can be used to configure `clangd`, so all you have to do is tell lsp-zero to ignore the `clangd` server.
+[clangd_extensions.nvim](https://github.com/p00f/clangd_extensions.nvim) can be used to configure `clangd`, so all you have to do is tell lsp-default to ignore the `clangd` server.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -285,4 +285,3 @@ lsp.setup()
 
 require('clangd_extensions').setup()
 ```
-

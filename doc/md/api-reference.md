@@ -2,15 +2,15 @@
 
 ## Commands
 
-* `LspZeroFormat {server} timeout={timeout}`: Formats the current buffer or range. Under the hood lsp-zero is using the function `vim.lsp.buf.format()`. If the "bang" is provided formatting will be asynchronous (ex: `LspZeroFormat!`). If you provide the name of a language server as a first argument it will try to format only using that server. Otherwise, it will use every active language server with formatting capabilities. With the `timeout` parameter you can configure the time in milliseconds to wait for the response of the formatting requests.
+* `LspDefaultFormat {server} timeout={timeout}`: Formats the current buffer or range. Under the hood lsp-default is using the function `vim.lsp.buf.format()`. If the "bang" is provided formatting will be asynchronous (ex: `LspDefaultFormat!`). If you provide the name of a language server as a first argument it will try to format only using that server. Otherwise, it will use every active language server with formatting capabilities. With the `timeout` parameter you can configure the time in milliseconds to wait for the response of the formatting requests.
 
-* `LspZeroWorkspaceRemove`: Remove the folder at path from the workspace folders. See [:help vim.lsp.buf.remove_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.remove_workspace_folder()).
+* `LspDefaultWorkspaceRemove`: Remove the folder at path from the workspace folders. See [:help vim.lsp.buf.remove_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.remove_workspace_folder()).
 
-* `LspZeroWorkspaceAdd`: Add the folder at path to the workspace folders. See [:help vim.lsp.buf.add_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.add_workspace_folder()).
+* `LspDefaultWorkspaceAdd`: Add the folder at path to the workspace folders. See [:help vim.lsp.buf.add_workspace_folder()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.add_workspace_folder()).
 
-* `LspZeroWorkspaceList`: List workspace folders. See [:help vim.lsp.buf.list_workspace_folders()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.list_workspace_folders()).
+* `LspDefaultWorkspaceList`: List workspace folders. See [:help vim.lsp.buf.list_workspace_folders()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.list_workspace_folders()).
 
-* `LspZeroSetupServers`: It takes a space separated list of servers and configures them.
+* `LspDefaultSetupServers`: It takes a space separated list of servers and configures them.
 
 ## Lua api
 
@@ -19,7 +19,7 @@
 Defines the sign icons that appear in the gutter.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -37,12 +37,12 @@ lsp.setup()
 
 ### `.preset({opts})`
 
-Here is where you can add settings specific to lsp-zero. The default configuration is described in the [minimal preset](#minimal). 
+Here is where you can add settings specific to lsp-default. The default configuration is described in the [minimal preset](#minimal).
 
 You can override any value of the preset by using a lua table, like this.
 
 ```lua
-local lsp = require('lsp-zero').preset({
+local lsp = require('lsp-default').preset({
   float_border = 'none',
 })
 ```
@@ -50,7 +50,7 @@ local lsp = require('lsp-zero').preset({
 In order to remain compatible with the `v1.x` branch `{opts}` can be a string with the name of a preset.
 
 ```lua
-local lsp = require('lsp-zero').preset('minimal')
+local lsp = require('lsp-default').preset('minimal')
 ```
 
 > I would like to get rid of these "named presets" in the future. It's better if you add the settings using a lua table.
@@ -66,7 +66,7 @@ It supports the following presets:
 When using a lua table as argument you can pass the property `name` to specify which preset you wish to use. And of course, you can still override the configuration in the preset.
 
 ```lua
-local lsp = require('lsp-zero').preset({
+local lsp = require('lsp-default').preset({
   name = 'recommended',
   call_servers = 'global',
 })
@@ -82,15 +82,15 @@ It can be a boolean or a lua table.
 
 Supported properties:
 
-* `preserve_mappings`. Boolean. When set to `true` lsp-zero will not override any shortcut that is already "taken". When set to `false` lsp-zero the LSP shortcuts will be created no matter what.
+* `preserve_mappings`. Boolean. When set to `true` lsp-default will not override any shortcut that is already "taken". When set to `false` lsp-default the LSP shortcuts will be created no matter what.
 
-* `omit`. List of strings. List of shorcuts you don't want lsp-zero to override.
+* `omit`. List of strings. List of shorcuts you don't want lsp-default to override.
 
 When set_lsp_keymaps is set to true then `preserve_mappings` is assumed to be false and `omit` is set to an empty list. When set_lsp_keymaps is false then the keybindings will not be created.
 
 #### `manage_nvim_cmp`
 
-It can be a boolean or a lua table. When is set to a boolean every supported property will have that value. 
+It can be a boolean or a lua table. When is set to a boolean every supported property will have that value.
 
 Supported properties:
 
@@ -103,7 +103,7 @@ Supported properties:
 * `use_luasnip`. Boolean. When set to true it will setup luasnip to expand snippets. This option does not include a collection of snippets.
 
 * `set_format`. Boolean. When set to true it'll modify the "format" of the completion items.
-    
+
 * `documentation_window`. Boolean. When set to true enables the documentation window.
 
 #### `setup_servers_on_start`
@@ -202,7 +202,7 @@ call_servers = 'global'
 
 ### `.default_keymaps({opts})`
 
-Create the keybindings bound to built-in LSP functions. 
+Create the keybindings bound to built-in LSP functions.
 
 The `{opts}` table supports the same properties as [set_lsp_keymaps](#set_lsp_keymaps) and adds the following:
 
@@ -247,10 +247,10 @@ Executes the `{callback}` function every time a server is attached to a buffer.
 This is where you can declare your own keymaps and commands.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr}) -- add lsp-zero defaults
+  lsp.default_keymaps({buffer = bufnr}) -- add lsp-default defaults
 
   local opts = {buffer = bufnr}
   local bind = vim.keymap.set
@@ -264,7 +264,7 @@ lsp.setup()
 
 ### `.set_server_config({opts})`
 
-It will share the configuration options with all the language servers lsp-zero initializes. These options are the same nvim-lspconfig uses in their setup function, see [:help lspconfig-setup](https://github.com/neovim/nvim-lspconfig/blob/41dc4e017395d73af0333705447e858b7db1f75e/doc/lspconfig.txt#L68).
+It will share the configuration options with all the language servers lsp-default initializes. These options are the same nvim-lspconfig uses in their setup function, see [:help lspconfig-setup](https://github.com/neovim/nvim-lspconfig/blob/41dc4e017395d73af0333705447e858b7db1f75e/doc/lspconfig.txt#L68).
 
 Here is an example that enables the folding capabilities and disable single file support.
 
@@ -287,7 +287,7 @@ lsp.set_server_config({
 Gathers the arguments for a particular language server. `{name}` must be a string with the name of language server in this list: [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#configurations). And `{opts}` is a lua table with the options for that server. These options are the same nvim-lspconfig uses in their setup function, see [:help lspconfig-setup](https://github.com/neovim/nvim-lspconfig/blob/41dc4e017395d73af0333705447e858b7db1f75e/doc/lspconfig.txt#L68) for more details.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -310,7 +310,7 @@ Will configure all the language servers you have on `{list}`.
 This is useful when you disable the automatic setup of language servers.
 
 ```lua
-local lsp = require('lsp-zero').preset({
+local lsp = require('lsp-default').preset({
   setup_servers_on_start = false,
 })
 
@@ -328,7 +328,7 @@ lsp.setup()
 All the language servers in `{list}` will be ignored during setup.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -341,14 +341,14 @@ lsp.setup()
 
 ### `.build_options({name}, {opts})`
 
-Returns all the parameters lsp-zero uses to initialize a language server. This includes default capabilities and settings that were added using the [.set_server_config()](#set_server_configopts) function.
+Returns all the parameters lsp-default uses to initialize a language server. This includes default capabilities and settings that were added using the [.set_server_config()](#set_server_configopts) function.
 
 ### `.nvim_lua_ls({opts})`
 
 Returns settings specific to Neovim for the lua language server, lua_ls.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -387,7 +387,7 @@ Ideally, you would setup some default values for your servers in your neovim con
 ```lua
 -- init.lua
 
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -405,7 +405,7 @@ And then in your local config you can tweak the server options even more.
 ```lua
 -- local config
 
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.use('pyright', {
   settings = {
@@ -420,7 +420,7 @@ lsp.use('pyright', {
 
 Options from [.configure()](#configurename-opts) will be merged with the ones on `.use()` and the server will restart with the new config.
 
-lsp-zero does not execute files. It only provides utility functions. So to execute your "local config" you'll have to use another plugin.
+lsp-default does not execute files. It only provides utility functions. So to execute your "local config" you'll have to use another plugin.
 
 ### `.format_on_save({opts})`
 
@@ -437,7 +437,7 @@ Keep in mind it's only meant to allow one LSP server per filetype, this is so th
 When you enable async formatting the only argument in `format_opts` that will have any effect are `formatting_options` and `timeout_ms`, the rest will be ignored.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -470,7 +470,7 @@ If {client} argument is provided it will only use the LSP server associated with
   * opts: (Table). These are the same options you can pass to [vim.lsp.buf.format()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.format()).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -484,14 +484,14 @@ lsp.setup()
 
 Send a formatting request to `{client}`. After the getting the response from the client it will save the file (again).
 
-Here is how it works: when you save the file Neovim will write your changes without formatting. Then, lsp-zero will send a request to `{client}`, when it gets the response it will apply the formatting and save the file again.
+Here is how it works: when you save the file Neovim will write your changes without formatting. Then, lsp-default will send a request to `{client}`, when it gets the response it will apply the formatting and save the file again.
 
 * client: (Table) It must be an instance of [vim.lsp.client](https://neovim.io/doc/user/lsp.html#vim.lsp.client).
 
 * bufnr: (Number, Optional) if provided it must be the id of an open buffer.
 
 * opts: (Table, Optional) Supports the following properties:
-  
+
   * formatting_options: (Table, Optional) Settings send to the language server. These are the same settings as the `formatting_options` argument in [vim.lsp.buf.format()](https://neovim.io/doc/user/lsp.html#vim.lsp.buf.format()).
 
   * timeout_ms: (Number, Optional) Defaults to 10000. Time in milliseconds to ignore the current format request.
@@ -499,7 +499,7 @@ Here is how it works: when you save the file Neovim will write your changes with
 Do not use this in the global `on_attach`, call this function with the specific language server you want to format with.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -516,7 +516,7 @@ lsp.setup()
 
 ### `.format_mapping({key}, {opts})`
 
-Configure {key} to format the current buffer.   
+Configure {key} to format the current buffer.
 
 The idea here is that you associate a language server with a list of filetypes, so `{key}` can format the buffer using only one LSP server.
 
@@ -529,7 +529,7 @@ The idea here is that you associate a language server with a list of filetypes, 
   * mode: (Table). The list of modes where the keybinding will be active. By default is set to `{'n', 'x'}`, which means normal mode and visual mode.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -551,7 +551,7 @@ lsp.setup()
 
 ### `.new_server({opts})`
 
-lsp-zero will execute a user provided function to detect the root directory of the project when Neovim assigns the file type for a buffer. If the root directory is detected the LSP server will be attached to the file.
+lsp-default will execute a user provided function to detect the root directory of the project when Neovim assigns the file type for a buffer. If the root directory is detected the LSP server will be attached to the file.
 
 This function does not depend on `lspconfig`, it's a thin wrapper around a Neovim function called [vim.lsp.start()](https://neovim.io/doc/user/lsp.html#vim.lsp.start()).
 
@@ -572,7 +572,7 @@ Other important properties are:
 Here is an example that starts the [typescript language server](https://github.com/typescript-language-server/typescript-language-server) on javascript and typescript, but only in a project that package.json in the current directory or any of its parent folders.
 
 ```lua
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.on_attach(function()
   lsp.default_keymaps({buffer = bufnr})
@@ -590,7 +590,7 @@ lsp.new_server({
 
 ### `.dir.find_first({list})`
 
-Checks the parent directories and returns the path to the first folder that has a file in `{list}`. This is useful to detect the root directory. 
+Checks the parent directories and returns the path to the first folder that has a file in `{list}`. This is useful to detect the root directory.
 
 Note: search will stop once it gets to your "HOME" folder.
 
@@ -601,7 +601,7 @@ Note: search will stop once it gets to your "HOME" folder.
   * buffer: (Boolean) When set to `true` use the path of the current buffer.
 
 ```lua
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -631,7 +631,7 @@ Note: search will stop once it gets to your "HOME" folder.
   * buffer: (Boolean) When set to `true` use the path of the current buffer.
 
 ```lua
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -676,17 +676,17 @@ Quick note: "the fallback" is the default behavior of the key you assign to a me
 
 ### `.extend_cmp({opts})`
 
-In case you don't want to use lsp-zero to actually setup any LSP servers, or want to lazy load nvim-cmp, you can use `.extend_cmp` to setup nvim-cmp.
+In case you don't want to use lsp-default to actually setup any LSP servers, or want to lazy load nvim-cmp, you can use `.extend_cmp` to setup nvim-cmp.
 
 When you invoke this function it is assumed you want a "minimal" configuration. Meaning that if you call it without `{opts}` it will use the same config the [minimal](#minimal) preset uses in the setting [manage_nvim_cmp](#manage_nvim_cmp).
 
 This is completely valid.
 
 ```lua
-require('lsp-zero').extend_cmp()
+require('lsp-default').extend_cmp()
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+local cmp_action = require('lsp-default').cmp_action()
 
 cmp.setup({
   sources = {
@@ -721,11 +721,11 @@ Configure the behavior of Neovim's completion mechanism. If for some reason you 
 
   * `trigger`: String. It must be a valid keyboard shortcut. This will be used as a keybinding to trigger the completion menu manually. Actually, it will be able to toggle the completion menu. You'll be able to show and hide the menu with the same keybinding.
 
-  * `use_fallback`: Boolean. Default value is `false`. When enabled lsp-zero will try to complete using the words in the current buffer. And when an LSP server is attached to the buffer, it will replace the fallback completion with the LSP completions.
+  * `use_fallback`: Boolean. Default value is `false`. When enabled lsp-default will try to complete using the words in the current buffer. And when an LSP server is attached to the buffer, it will replace the fallback completion with the LSP completions.
 
   * `keyword_pattern`: String. Regex pattern used by the autocomplete implementation. Default value is `"[[:keyword:]]"`.
 
-  * `update_on_delete`: Boolean. Default value is `false`. Turns out Neovim will hide the completion menu when you delete a character, so when you enable this option lsp-zero will trigger the menu again after you press `<backspace>`. This will only happen with LSP completions, the fallback completion updates automatically (again, this is Neovim's default behavior). This option is disabled by default because it requires lsp-zero to bind the backspace key, which may cause conflicts with other plugins.
+  * `update_on_delete`: Boolean. Default value is `false`. Turns out Neovim will hide the completion menu when you delete a character, so when you enable this option lsp-default will trigger the menu again after you press `<backspace>`. This will only happen with LSP completions, the fallback completion updates automatically (again, this is Neovim's default behavior). This option is disabled by default because it requires lsp-default to bind the backspace key, which may cause conflicts with other plugins.
 
   * `select_behavior`: String. Default value is `"select"`. Configures what happens when you select an item in the completion menu. When the value is `"insert"` Neovim will insert the text of the item in the buffer. When the value is `"select"` nothing happens, Neovim will only highlight the item in the menu, the text in the buffer will not change.
 
@@ -746,7 +746,7 @@ Configure the behavior of Neovim's completion mechanism. If for some reason you 
 You can configure a basic "tab completion" behavior using these settings.
 
 ```lua
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.omnifunc.setup({
   tabcomplete = true,
@@ -758,7 +758,7 @@ lsp.omnifunc.setup({
 And here is an example for autocomplete.
 
 ```lua
-local lsp = require('lsp-zero')
+local lsp = require('lsp-default')
 
 lsp.omnifunc.setup({
   autocomplete = true,
@@ -779,7 +779,7 @@ The following functions will be remove in the future, whenever I feel forced to 
 If you have support for mason.nvim enabled it will install all the servers in `{list}`. The names of the servers should match the ones listed here: [server_configurations](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#configurations).
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -787,7 +787,7 @@ end)
 
 lsp.ensure_installed({
   'tsserver',
-  'eslint', 
+  'eslint',
   'rust_analyzer',
 })
 
@@ -862,7 +862,7 @@ Returns the neovim specific settings for `lua_ls` language server.
 
 ### `.extend_lspconfig({opts})`
 
-The purpose of this function is to allow you to interact with `lspconfig` directly and still get some features lsp-zero offers.
+The purpose of this function is to allow you to interact with `lspconfig` directly and still get some features lsp-default offers.
 
 It "extends" the default configuration in `lspconfig` by adding the `capabilities` provided by cmp_nvim_lsp. And, it creates an autocommand that executes a function everytime a language server is attached to a buffer.
 
@@ -873,7 +873,7 @@ This is the intended usage:
 ```lua
 require('mason').setup()
 require('mason-lspconfig').setup()
-require('lsp-zero').extend_lspconfig()
+require('lsp-default').extend_lspconfig()
 
 require('lspconfig').tsserver.setup({})
 ```
@@ -893,7 +893,7 @@ Here's an example that showcase each option.
 ```lua
 -- There is no need to copy any of this
 
-require('lsp-zero').extend_lspconfig({
+require('lsp-default').extend_lspconfig({
   set_lsp_keymaps = {omit = {'gs', 'gl'}},
   on_attach = function(client, bufnr)
     print('hello there')

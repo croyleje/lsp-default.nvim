@@ -3,7 +3,7 @@ I realize some people would want to know what happens under the hood when they u
 Okay, so this thing.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Diagnostics
     map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
     map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-    map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>') 
+    map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
   end
 })
 
@@ -174,4 +174,3 @@ local cmp_config = {
 
 cmp.setup(cmp_config)
 ```
-

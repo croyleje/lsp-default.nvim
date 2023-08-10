@@ -4,9 +4,9 @@
 
 The plugin responsible for autocompletion is [nvim-cmp](https://github.com/hrsh7th/nvim-cmp). This plugin is designed to be unopinionated and modular. What this means for us (the users) is that we have to assemble various pieces to get a good experience.
 
-When using a preset lsp-zero will configure nvim-cmp for you. This config will include a "completion source" to get data from your LSP servers. It will create keybindings to control the completion menu. Setup a snippet engine ([luasnip](https://github.com/L3MON4D3/LuaSnip)) to expand the snippet that come from your LSP server. And finally, it will change the "formatting" of the completion items, it'll add a label that tells the name of the source for that item.
+When using a preset lsp-default will configure nvim-cmp for you. This config will include a "completion source" to get data from your LSP servers. It will create keybindings to control the completion menu. Setup a snippet engine ([luasnip](https://github.com/L3MON4D3/LuaSnip)) to expand the snippet that come from your LSP server. And finally, it will change the "formatting" of the completion items, it'll add a label that tells the name of the source for that item.
 
-Here is the code lsp-zero will setup for you.
+Here is the code lsp-default will setup for you.
 
 ```lua
 local cmp = require('cmp')
@@ -68,7 +68,7 @@ cmp.setup({
 
 ## Preset settings
 
-You can control what lsp-zero is going to do with nvim-cmp using a preset. For example, the [minimal](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#minimal) preset has the following settings:
+You can control what lsp-default is going to do with nvim-cmp using a preset. For example, the [minimal](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#minimal) preset has the following settings:
 
 ```lua
 manage_nvim_cmp = {
@@ -81,10 +81,10 @@ manage_nvim_cmp = {
 }
 ```
 
-If you want to know the details of each property go to [the api reference](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#manage_nvim_cmp). But what this means is you can do stuff like this.
+If you want to know the details of each property go to [the api reference](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#manage_nvim_cmp). But what this means is you can do stuff like this.
 
 ```lua
-local lsp = require('lsp-zero').preset({
+local lsp = require('lsp-default').preset({
   manage_nvim_cmp = {
     set_extra_mappings = true,
   }
@@ -129,12 +129,12 @@ These are the keybindings you get when you enable `manage_nvim_cmp.set_extra_map
 
 ## Customizing nvim-cmp
 
-What I actually recommend is using `cmp` directly. Let lsp-zero do the "minimal" config, then use the module `cmp` to add any extra features you want.
+What I actually recommend is using `cmp` directly. Let lsp-default do the "minimal" config, then use the module `cmp` to add any extra features you want.
 
-Make sure you setup `cmp` after lsp-zero, so you can override every option properly. Like this.
+Make sure you setup `cmp` after lsp-default, so you can override every option properly. Like this.
 
 ```lua
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
@@ -164,7 +164,7 @@ Second step, figure out what is the name of the source. I don't mean the name of
 Third step, add (all) the sources you want to use to nvim-cmp's config. For this we need to call the setup function of the `cmp` module, add the `sources` options and list every source we have installed.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -176,13 +176,13 @@ cmp.setup({
 })
 ```
 
-Notice we have two sources. The first source, `{name = 'nvim_lsp'}`, belongs to this plugin [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp). You installed that when you configured lsp-zero for the first time. We need to add it here because nvim-cmp will override previous value of the `sources` option. In other words, we need it so we don't lose the LSP completions.
+Notice we have two sources. The first source, `{name = 'nvim_lsp'}`, belongs to this plugin [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp). You installed that when you configured lsp-default for the first time. We need to add it here because nvim-cmp will override previous value of the `sources` option. In other words, we need it so we don't lose the LSP completions.
 
 `{name = 'buffer'}` is the new plugin [hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer). After adding this we can restart Neovim and test it.
 
 ### Recommended sources
 
-If you set `manage_nvim_cmp.set_sources` to the string `'recommended'`, lsp-zero will try to setup the following sources (if they are installed):
+If you set `manage_nvim_cmp.set_sources` to the string `'recommended'`, lsp-default will try to setup the following sources (if they are installed):
 
 * [cmp-buffer](https://github.com/hrsh7th/cmp-buffer): provides suggestions based on the current file.
 
@@ -197,7 +197,7 @@ If you set `manage_nvim_cmp.set_sources` to the string `'recommended'`, lsp-zero
 You'll want to add an entry to the `mapping` option of nvim-cmp. You can assign `<CR>` to the function `cmp.mapping.confirm`.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -225,10 +225,10 @@ We don't need to write our own snippets, we can download a collection like [frie
 Here is the code you would need to load `friendly-snippets` into nvim-cmp.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+local cmp_action = require('lsp-default').cmp_action()
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
@@ -255,7 +255,7 @@ require('luasnip.loaders.from_snipmate').lazy_load()
 Make the first item in completion menu always be selected.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -272,7 +272,7 @@ cmp.setup({
 You can install and configure [cmp-nvim-lua](https://github.com/hrsh7th/cmp-nvim-lua) to get completions based on Neovim's lua api.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -293,10 +293,10 @@ cmp.setup({
 If the completion menu is visible it will navigate to the next item in the list. If the cursor is on top of a "snippet trigger" it'll expand it. If the cursor can jump to a snippet placeholder, it moves to it. If the cursor is in the middle of a word it displays the completion menu. Else, it acts like a regular `Tab` key.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+local cmp_action = require('lsp-default').cmp_action()
 
 cmp.setup({
   mapping = {
@@ -311,10 +311,10 @@ cmp.setup({
 Trigger the completion menu when the cursor is inside a word. If the completion menu is visible it will navigate to the next item in the list. If the line is empty it acts like a regular `Tab` key.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+local cmp_action = require('lsp-default').cmp_action()
 
 cmp.setup({
   mapping = {
@@ -331,7 +331,7 @@ For this you'll have to disable the `completion.autocomplete` option in nvim-cmp
 Here is an example that uses `Ctrl + Space` to trigger completions.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -350,7 +350,7 @@ cmp.setup({
 Most people just use the preset nvim-cmp offers. You'll need to configure the `window` option. Inside this window property, you can add borders to the completion menu and also the documentation window. Here is the code.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -371,7 +371,7 @@ Customizing the format requires some knowledge about lua, 'cause you have to imp
 Here is a basic example that adds icons based on the name of the source.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -402,7 +402,7 @@ cmp.setup({
 [lspkind.nvim](https://github.com/onsails/lspkind.nvim) should work.
 
 ```lua
--- Make sure you setup `cmp` after lsp-zero
+-- Make sure you setup `cmp` after lsp-default
 
 local cmp = require('cmp')
 
@@ -417,4 +417,3 @@ cmp.setup({
   }
 })
 ```
-

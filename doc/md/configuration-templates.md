@@ -25,7 +25,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    'VonHeikemen/lsp-zero.nvim',
+    'croyleje/lsp-default.nvim',
     branch = 'v2.x',
     dependencies = {
       -- LSP Support
@@ -41,10 +41,10 @@ require('lazy').setup({
   }
 })
 
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
+  -- see :help lsp-default-keybindings
   -- to learn the available actions
   lsp.default_keymaps({buffer = bufnr})
 end)
@@ -71,15 +71,15 @@ call plug#begin()
   Plug 'hrsh7th/cmp-nvim-lsp'     " Required
   Plug 'L3MON4D3/LuaSnip'         " Required
 
-  Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
+  Plug 'croyleje/lsp-default.nvim', {'branch': 'v2.x'}
 call plug#end()
 
 
 lua <<EOF
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
+  -- see :help lsp-default-keybindings
   -- to learn the available actions
   lsp.default_keymaps({buffer = bufnr})
 end)
@@ -90,4 +90,3 @@ require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 lsp.setup()
 EOF
 ```
-

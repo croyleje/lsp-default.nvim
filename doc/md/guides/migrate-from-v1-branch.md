@@ -4,7 +4,7 @@ Here you will find how to re-enable most of the features that were removed from 
 
 ## Configure diagnostic
 
-In `v2.x` lsp-zero doesn't configure diagnostic, you just get the default Neovim behaviour. If you want to get the icons and the config, add this code after lsp-zero's [.setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#setup) function.
+In `v2.x` lsp-default doesn't configure diagnostic, you just get the default Neovim behaviour. If you want to get the icons and the config, add this code after lsp-default's [.setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#setup) function.
 
 ```lua
 lsp.set_sign_icons({
@@ -29,7 +29,7 @@ vim.diagnostic.config({
 
 ## Configure the lua language server
 
-Now you will need to setup `lua_ls` using lspconfig, and then add the configuration using the function [.nvim_lua_ls()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#nvim_lua_lsopts). Make your sure you do this before calling lsp-zero's [.setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. 
+Now you will need to setup `lua_ls` using lspconfig, and then add the configuration using the function [.nvim_lua_ls()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#nvim_lua_lsopts). Make your sure you do this before calling lsp-default's [.setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#setup) function.
 
 ```lua
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
@@ -45,9 +45,9 @@ In `v2.x` only the source to get LSP completions is configured. If you want to u
 * [hrsh7th/cmp-nvim-lua](https://github.com/hrsh7th/cmp-nvim-lua)
 * [saadparwaiz1/cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip)
 * [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
-* [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip) 
+* [L3MON4D3/LuaSnip](https://github.com/L3MON4D3/LuaSnip)
 
-Then you can configure nvim-cmp after lsp-zero's [.setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#setup) function.
+Then you can configure nvim-cmp after lsp-default's [.setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#setup) function.
 
 ```lua
 local cmp = require('cmp')
@@ -66,11 +66,11 @@ cmp.setup({
 
 ## Configure autocomplete mappings
 
-Make sure you configure nvim-cmp after lsp-zero's [.setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. Then you can add the mappings you want in your cmp setup. This config uses the old mappings from `v1.x`.
+Make sure you configure nvim-cmp after lsp-default's [.setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. Then you can add the mappings you want in your cmp setup. This config uses the old mappings from `v1.x`.
 
 ```lua
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero.cmp').action()
+local cmp_action = require('lsp-default.cmp').action()
 
 cmp.setup({
   mapping = {
@@ -97,7 +97,7 @@ cmp.setup({
 
 ## Add borders to documention window in completion menu
 
-Make sure you configure nvim-cmp after lsp-zero's [.setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. Then you can add the config to the `window.documention` property in nvim-cmp.
+Make sure you configure nvim-cmp after lsp-default's [.setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. Then you can add the config to the `window.documention` property in nvim-cmp.
 
 ```lua
 local cmp = require('cmp')
@@ -111,7 +111,7 @@ cmp.setup({
 
 ## Preselect first completion item
 
-Make sure you configure nvim-cmp after lsp-zero's [.setup()](https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. Then you can add the following settings to nvim-cmp.
+Make sure you configure nvim-cmp after lsp-default's [.setup()](https://github.com/croyleje/lsp-default.nvim/blob/v2.x/doc/md/api-reference.md#setup) function. Then you can add the following settings to nvim-cmp.
 
 ```lua
 local cmp = require('cmp')
@@ -144,7 +144,7 @@ if not ok then
 end
 
 lazy.setup({
-  {'VonHeikemen/lsp-zero.nvim', branch = 'v2.x'},
+  {'croyleje/lsp-default.nvim', branch = 'v2.x'},
 
   -- LSP Support
   {'williamboman/mason.nvim'},
@@ -162,10 +162,10 @@ lazy.setup({
   {'rafamadriz/friendly-snippets'},
 })
 
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-default').preset({})
 
 lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
+  -- see :help lsp-default-keybindings
   -- to learn the available actions
   lsp.default_keymaps({buffer = bufnr})
 end)
@@ -194,7 +194,7 @@ vim.diagnostic.config({
 })
 
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero.cmp').action()
+local cmp_action = require('lsp-default.cmp').action()
 
 require('luasnip.loaders.from_vscode').lazy_load()
 
@@ -236,4 +236,3 @@ cmp.setup({
   },
 })
 ```
-
