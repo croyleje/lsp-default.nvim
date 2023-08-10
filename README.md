@@ -1,12 +1,26 @@
+# Fork
+
+This is a fork of the excellent work done by [https://github.com/VonHeikemen/lsp-zero.nvim](https://github.com/VonHeikemen/lsp-zero.nvim) I highly recommend checking it out if [Neovim](https://neovim.io/) is something that interests you.
+
+This repository currently only has a few changes applied to it mostly function
+and variable name changes.  Further changes will be reflected in this README.md
+in the future.
+
+## Plans
+
+The plans are to pair done the original to more bare bones / boilerplate
+approach where possible the code will remain to allow you to enable it or use it
+as a reference but will be commented out.  The bindings will be removed and
+changed to defaults I prefer and base will be left to allow someone to spin up
+there own using this repo as a framework.
+
 # LSP
 
 The purpose of this plugin is to bundle all the "boilerplate code" necessary to have [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) (a popular autocompletion plugin) and [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) working together. And if you opt in, it can use [mason.nvim](https://github.com/williamboman/mason.nvim) to let you install language servers from inside neovim.
 
-If you have any question about a feature or configuration feel free to open a new [discussion](https://github.com/croyleje/lsp-default.nvim/discussions) in this repository. Or join the chat [#lsp-default-nvim:matrix.org](https://matrix.to/#/#lsp-default-nvim:matrix.org).
+If you have any question about a feature or configuration feel free to open a new [discussion](https://github.com/VonHeikemen/lsp-zero.nvim/discussions) in this repository. Or join the chat [#lsp-zero-nvim:matrix.org](https://matrix.to/#/%23lsp-zero-nvim:matrix.org).
 
 ## Announcement
-
-The [development branch for v3.x](https://github.com/croyleje/lsp-default.nvim/tree/dev-v3) has been created (and is basically done). I'm thinking on making `v3.x` the default branch on `September 20`. If you want to talk about the new changes [join the discussion about v3.x](https://github.com/croyleje/lsp-default.nvim/discussions/286).
 
 ## How to get started
 
